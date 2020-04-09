@@ -13,32 +13,46 @@ import { Route, Switch, NavLink, Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-function App({ auth }) {
-  return (
-    <Container>
-      {auth.isAuthenticated ? <Nav></Nav> : null}
+import { initUsersAsync } from './actions';
 
-      <Switch>
-        <Route exact path='/'>
-          <Home />
-        </Route>
-        <Route path='/question'>
-          <Question />
-        </Route>
-        <Route path='/leaderboard'>
-          <LeaderBoard />
-        </Route>
-        <Route path='/login'>
-          <Login />
-        </Route>
-      </Switch>
-    </Container>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initUsersAsync();
+  }
+  
+  render() {
+    const { auth } = this.props;
+
+    return (
+      <Container>
+        {auth.isAuthenticated ? <Nav></Nav> : null}
+
+        <Switch>
+          <Route exact path='/'>
+            <Home />
+          </Route>
+          <Route path='/question'>
+            <Question />
+          </Route>
+          <Route path='/leaderboard'>
+            <LeaderBoard />
+          </Route>
+          <Route path='/login'>
+            <Login />
+          </Route>
+        </Switch>
+      </Container>
+    );
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    auth: state.auth,
+    auth: state.auth
   };
 };
-export default connect(mapStateToProps)(App);
+
+const mapDispatchToProps = {
+  initUsersAsync,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
