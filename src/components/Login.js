@@ -12,13 +12,17 @@ import { connect } from 'react-redux';
 
 import { signIn } from '../actions';
 
+
+import {withRouter} from 'react-router'
+
 class Login extends Component {
-  state = { user: null };
+  state = { userId: null };
   login() {
-    this.props.signIn();
+    this.props.signIn(this.props.users[this.state.userId]);
+    this.props.history.push('/');
   }
 
-  handleChange = (e, { value }) => this.setState({ user: value });
+  handleChange = (e, { value }) => this.setState({ userId: value });
 
   render() {
     const gridStyle = {
@@ -55,12 +59,12 @@ class Login extends Component {
               fluid
               selection
               options={opts}
-              value={this.state.user}
+              value={this.state.userId}
               onChange={this.handleChange}
             />
           </Segment>
 
-          <Button size='huge' primary onClick={() => this.login()}>
+          <Button size='huge' primary onClick={() => this.login()}  { ...(this.state.userId===null? {disabled:true}:null)} >
             <Icon name='send'></Icon>Login
           </Button>
         </Grid.Column>
@@ -80,4 +84,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

@@ -1,8 +1,9 @@
 import { SIGN_IN, SIGN_OUT, INIT_USERS, INIT_QUESTIONS } from './types';
 import * as API from '../service/_DATA';
 
-export const signIn = () => ({
+export const signIn = (user) => ({
   type: SIGN_IN,
+  user
 });
 
 export const signOut = () => ({

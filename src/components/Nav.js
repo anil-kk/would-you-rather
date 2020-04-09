@@ -5,12 +5,17 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut } from '../actions';
 
+import {withRouter} from 'react-router'
+
 class Nav extends Component {
   state = { activeItem: 'home' };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
-  logOut = () => this.props.signOut();
+  logOut = () => {
+    this.props.signOut();
+    this.props.history.push('/login')
+  };
 
   render() {
     const { activeItem } = this.state;
@@ -58,4 +63,4 @@ const mapDispatchToProps = {
   signOut,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav));
