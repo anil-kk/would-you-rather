@@ -1,21 +1,21 @@
-import { SIGN_IN, SIGN_OUT } from "../actions/types";
+import { SIGN_IN, SIGN_OUT } from '../actions/types';
 
 const initialState = {
-  isAuthenticated: false
+  isAuthenticated: false,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SIGN_IN: {
       return {
         ...state,
-        isAuthenticated: true
+        isAuthenticated: true,
       };
     }
     case SIGN_OUT: {
       return {
         ...state,
-        isAuthenticated: false
+        isAuthenticated: false,
       };
     }
     default:
