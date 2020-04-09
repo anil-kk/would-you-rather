@@ -1,11 +1,11 @@
 import React from 'react';
 import * as API from './service/_DATA'
 
+import {Container} from 'semantic-ui-react'
+
 function App() {
   return (
-    <div>
-      Would you rather? Hello World!
-    </div>
+    <Container> This is a Semantic UI Container</Container>
   );
 }
 
