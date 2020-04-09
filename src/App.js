@@ -13,13 +13,14 @@ import { Route, Switch, NavLink, Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import { initUsersAsync } from './actions';
+import { initUsersAsync, initQuestionsAsync } from './actions';
 
 class App extends React.Component {
   componentDidMount() {
     this.props.initUsersAsync();
+    this.props.initQuestionsAsync();
   }
-  
+
   render() {
     const { auth } = this.props;
 
@@ -54,5 +55,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
   initUsersAsync,
+  initQuestionsAsync
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);
