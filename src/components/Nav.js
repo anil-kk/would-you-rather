@@ -1,44 +1,48 @@
-import React, { Component } from 'react'
-import { Menu, Icon } from 'semantic-ui-react'
+import React, { Component } from "react";
+import { Menu, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 class Nav extends Component {
-  state = { activeItem: 'home' }
+  state = { activeItem: "home" };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem } = this.state;
 
     return (
       <Menu secondary>
         <Menu.Item
-          name='home'
-          active={activeItem === 'home'}
+          name="home"
+          active={activeItem === "home"}
           onClick={this.handleItemClick}
+          as={Link}
+          to="/"
         />
         <Menu.Item
-          name='newQuestion'
-          active={activeItem === 'newQuestion'}
+          name="newQuestion"
+          active={activeItem === "newQuestion"}
           onClick={this.handleItemClick}
+          as={Link}
+          to="/question"
         />
         <Menu.Item
-          name='leaderBoard'
-          active={activeItem === 'leaderBoard'}
+          name="leaderBoard"
+          active={activeItem === "leaderBoard"}
           onClick={this.handleItemClick}
+          as={Link}
+          to="/leaderboard"
         />
-        <Menu.Menu position='right'>
-          <Menu.Item name='user'>
-          User 
-          <Icon name='user' size='large' />       
+        <Menu.Menu position="right">
+          <Menu.Item name="user">
+            User
+            <Icon name="user" size="large" />
           </Menu.Item>
-          <Menu.Item
-            name='logout'
-            onClick={this.handleItemClick}
-          />
+          <Menu.Item name="logout" onClick={this.handleItemClick} />
         </Menu.Menu>
       </Menu>
-    )
+    );
   }
 }
 
-export default Nav
+export default Nav;
