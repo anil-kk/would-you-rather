@@ -12,21 +12,6 @@ import { connect } from 'react-redux';
 
 import { signIn } from '../actions';
 
-const users = [
-  {
-    key: 'Jenny Hess',
-    text: 'Jenny Hess',
-    value: 'Jenny Hess',
-    image: { avatar: true, src: 'https://i.pravatar.cc/150?img=3' },
-  },
-  {
-    key: 'Elliot Fu',
-    text: 'Elliot Fu',
-    value: 'Elliot Fu',
-    image: { avatar: true, src: 'https://i.pravatar.cc/150?img=1' },
-  },
-];
-
 class Login extends Component {
   state = { user: null };
   login() {
@@ -42,6 +27,20 @@ class Login extends Component {
     const columnWidth = { maxWidth: '450px' };
     const classNames = 'center aligned middle aligned';
 
+    const opts = Object.keys(this.props.users).map((id, index) => {
+      const user = this.props.users[id];
+
+      return {
+        key: id,
+        value: id,
+        text: user.name,
+        image: {
+          avatar: true,
+          src: `https://i.pravatar.cc/150?img=${index + 1}`,
+        },
+      };
+    });
+
     return (
       <Grid style={gridStyle} className={classNames}>
         <Grid.Column style={columnWidth}>
@@ -55,7 +54,7 @@ class Login extends Component {
               placeholder='Select Friend'
               fluid
               selection
-              options={users}
+              options={opts}
               value={this.state.user}
               onChange={this.handleChange}
             />
@@ -77,6 +76,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state, ownProps) => {
   return {
     auth: state.auth,
+    users: state.users,
   };
 };
 

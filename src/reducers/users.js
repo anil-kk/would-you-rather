@@ -1,6 +1,8 @@
+import {INIT_USERS} from '../actions/types'
+
 const users = (state =[] , action) => {
     switch (action.type) {
-        case 'INIT_USERS':
+        case INIT_USERS:
             return action.users
         default:
             return state
