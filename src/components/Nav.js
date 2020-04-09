@@ -2,10 +2,15 @@ import React, { Component } from "react";
 import { Menu, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
+import { connect } from "react-redux";
+import { signOut } from "../actions";
+
 class Nav extends Component {
   state = { activeItem: "home" };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
+  logOut = () => this.props.signOut();
 
   render() {
     const { activeItem } = this.state;
@@ -38,11 +43,19 @@ class Nav extends Component {
             User
             <Icon name="user" size="large" />
           </Menu.Item>
-          <Menu.Item name="logout" onClick={this.handleItemClick} />
+          <Menu.Item name="logout" onClick={() => this.logOut()} />
         </Menu.Menu>
       </Menu>
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    auth: state.auth,
+  };
+};
+const mapDispatchToProps = {
+  signOut,
+};
 
-export default Nav;
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

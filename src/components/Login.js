@@ -4,10 +4,13 @@ import {
   Button,
   Icon,
   Grid,
-  List,
   Segment,
   Dropdown,
 } from "semantic-ui-react";
+
+import { connect } from "react-redux";
+
+import { signIn } from "../actions";
 
 const users = [
   {
@@ -22,33 +25,13 @@ const users = [
     value: "Elliot Fu",
     image: { avatar: true, src: "https://i.pravatar.cc/150?img=1" },
   },
-  {
-    key: "Stevie Feliciano",
-    text: "Stevie Feliciano",
-    value: "Stevie Feliciano",
-    image: { avatar: true, src: "https://i.pravatar.cc/150?img=2" },
-  },
-  {
-    key: "Christian",
-    text: "Christian",
-    value: "Christian",
-    image: { avatar: true, src: "https://i.pravatar.cc/150?img=4" },
-  },
-  {
-    key: "Matt",
-    text: "Matt",
-    value: "Matt",
-    image: { avatar: true, src: "https://i.pravatar.cc/150?img=6" },
-  },
-  {
-    key: "Justen Kitsune",
-    text: "Justen Kitsune",
-    value: "Justen Kitsune",
-    image: { avatar: true, src: "https://i.pravatar.cc/150?img=7" },
-  },
 ];
 
 class Login extends Component {
+  login() {
+    this.props.signIn();
+  }
+
   render() {
     const gridStyle = {
       height: "60vh",
@@ -56,7 +39,6 @@ class Login extends Component {
     const columnWidth = { maxWidth: "450px" };
     const classNames = "center aligned middle aligned";
 
-    const { history } = this.props;
     return (
       <Grid style={gridStyle} className={classNames}>
         <Grid.Column style={columnWidth}>
@@ -74,11 +56,7 @@ class Login extends Component {
             />
           </Segment>
 
-          <Button
-            size="huge"
-            primary
-            onClick={() => history.push("/")}
-          >
+          <Button size="huge" primary onClick={() => this.login()}>
             <Icon name="send"></Icon>Login
           </Button>
         </Grid.Column>
@@ -87,4 +65,14 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = {
+  signIn,
+};
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
