@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import { Item, Header, Statistic, Grid } from 'semantic-ui-react';
 
 class LeaderBoard extends Component {
+
   render() {
     const { users } = this.props;
 
     const usersArr = Object.keys(users)
       .map((id) => {
-        let answersCount = Object.keys(users[id].answers).length;
-        let questionsCount = users[id].questions.length;
+        const answersCount = Object.keys(users[id].answers).length;
+        const questionsCount = users[id].questions.length;
         return {
           ...users[id],
           answersCount: answersCount,
@@ -33,7 +34,7 @@ class LeaderBoard extends Component {
                 <Grid relaxed columns={2}>
                   <Grid.Column>
                     <Header size='small'>
-                      {' '}
+                      
                       Answered Questions: {user.answersCount}
                     </Header>
                     <Header size='small'>

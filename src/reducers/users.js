@@ -21,7 +21,7 @@ const users = (state = [], action) => {
           ...state[action.uid],
           answers: {
             ...state[action.uid].answers,
-            [action.uid]: action.answer,
+            [action.qid]: action.answer,
           },
         },
       };
