@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import QuestionList from '../components/QuestionList'
+
 
 class Home extends Component {
-    render() {
-        return (
-            <div>
-                Home
-            </div>
-        )
-    }
+  render() {
+    return <QuestionList></QuestionList>;
+  }
 }
 
-export default Home
+export default Home;
