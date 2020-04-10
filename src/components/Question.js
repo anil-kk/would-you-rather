@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import Result from '../components/Result'
+import Result from '../components/Result';
 
-import {updateAnswerAsync} from '../actions/index'
-
+import { updateAnswerAsync, addQuestionAsync } from '../actions/index';
 
 import {
   Divider,
@@ -29,25 +28,20 @@ class Question extends Component {
     const { id } = match.params;
     const question = id && questions[id];
 
-    this.props.updateAnswerAsync(auth.user.id, question.id, value)
+    this.props.updateAnswerAsync(auth.user.id, question.id, value);
   };
 
   handleChange = (e, { name, value }) => {
-    console.log(name, value);
     this.setState({ [name]: value });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
     const { optionOne, optionTwo } = this.state;
-    console.log('TODO: Dispatch Action to REDUX');
-    console.log(optionOne, optionTwo);
+    this.props.addQuestionAsync(optionOne, optionTwo, this.props.auth.user.id);
+    this.props.history.push('/');
   };
 
-  componentDidMount(){
-    console.log(this.props.questions)
-    console.log(this.props.users)
-  }
   render() {
     const { optionOne, optionTwo } = this.state;
     const { match, questions, users, auth } = this.props;
@@ -55,9 +49,10 @@ class Question extends Component {
     const question = id && questions[id];
     const author = question && users[question.author];
 
-    const isAnswered = question &&
+    const isAnswered =
+      question &&
       (question.optionOne.votes.includes(auth.user.id) ||
-      question.optionTwo.votes.includes(auth.user.id));
+        question.optionTwo.votes.includes(auth.user.id));
 
     return isAnswered ? (
       <Result question={question} author={author} user={auth.user}></Result>
@@ -154,7 +149,10 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
- const mapDispatchToProps =  {
-  updateAnswerAsync
-}
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Question));
+const mapDispatchToProps = {
+  updateAnswerAsync,
+  addQuestionAsync,
+};
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Question)
+);

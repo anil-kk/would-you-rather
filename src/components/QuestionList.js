@@ -15,17 +15,24 @@ class QuestionList extends React.Component {
 
     const questionIds = Object.keys(questions);
 
-    const answered = questionIds.filter((questionId) => {
-      return (
-        questions[questionId].optionOne.votes.includes(auth.user.id) ||
-        questions[questionId].optionTwo.votes.includes(auth.user.id)
-      );
-    });
-    const unAnswered = questionIds.filter(
-      (questionId) =>
-        !questions[questionId].optionOne.votes.includes(auth.user.id) &&
-        !questions[questionId].optionTwo.votes.includes(auth.user.id)
-    );
+    const answered = questionIds
+      .filter((questionId) => {
+        return (
+          questions[questionId].optionOne.votes.includes(auth.user.id) ||
+          questions[questionId].optionTwo.votes.includes(auth.user.id)
+        );
+      })
+      .map((id) => ({ id, timestamp: questions[id].timestamp }))
+      .sort((a, b) => b.timestamp - a.timestamp);
+
+    const unAnswered = questionIds
+      .filter(
+        (questionId) =>
+          !questions[questionId].optionOne.votes.includes(auth.user.id) &&
+          !questions[questionId].optionTwo.votes.includes(auth.user.id)
+      )
+      .map((id) => ({ id, timestamp: questions[id].timestamp }))
+      .sort((a, b) => b.timestamp - a.timestamp);
 
     const panes = [
       {
@@ -33,8 +40,8 @@ class QuestionList extends React.Component {
         render: () => (
           <Tab.Pane>
             <Item.Group>
-              {unAnswered.map((questionId) => {
-                const question = questions[questionId];
+              {unAnswered.map(({ id }) => {
+                const question = questions[id];
                 const author = users[question.author];
                 return (
                   <QuestionItem
@@ -53,8 +60,8 @@ class QuestionList extends React.Component {
         render: () => (
           <Tab.Pane>
             <Item.Group link>
-              {answered.map((questionId) => {
-                const question = questions[questionId];
+              {answered.map(({ id }) => {
+                const question = questions[id];
                 const author = users[question.author];
                 return (
                   <QuestionItem

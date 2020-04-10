@@ -5,3 +5,5 @@ export const INIT_USERS = 'INIT_USERS';
 export const INIT_QUESTIONS = 'INIT_QUESTIONS';
 
 export const UPDATE_ANSWER = 'UPDATE_ANSWER'
+
+export const ADD_QUESTION = 'ADD_QUESTION'
