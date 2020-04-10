@@ -34,7 +34,10 @@ class App extends React.Component {
             <Route exact path='/'>
               <Home />
             </Route>
-            <Route path='/question'>
+            <Route path='/question/:id'>
+              <Question />
+            </Route>
+            <Route exact path='/question'>
               <Question />
             </Route>
             <Route path='/leaderboard'>
