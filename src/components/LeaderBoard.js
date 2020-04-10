@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { Item, Icon, Header, Statistic, Grid } from 'semantic-ui-react';
+import { Item, Header, Statistic, Grid } from 'semantic-ui-react';
 
 class LeaderBoard extends Component {
   render() {
