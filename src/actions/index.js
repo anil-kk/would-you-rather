@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT, INIT_USERS, INIT_QUESTIONS } from './types';
+import { SIGN_IN, SIGN_OUT, INIT_USERS, INIT_QUESTIONS, UPDATE_ANSWER } from './types';
 import * as API from '../service/_DATA';
 
 export const signIn = (user) => ({
@@ -35,3 +35,21 @@ export const initQuestionsAsync = () => {
     );
   };
 };
+
+const updateAnswer = (uid, qid, answer)=>{
+  return {
+    type: UPDATE_ANSWER,
+    uid,
+    qid,
+    answer
+  }
+}
+
+export const updateAnswerAsync = (uid, qid, answer) => {
+  return (dispatch, getState)=>{
+    return API._saveQuestionAnswer({authedUser: uid, qid, answer}).then(()=>{
+      dispatch(updateAnswer(uid, qid, answer))
+    })
+
+  }
+}

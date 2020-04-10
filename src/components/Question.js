@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Result from '../components/Result'
 
+import {updateAnswerAsync} from '../actions/index'
+
 
 import {
   Divider,
@@ -17,17 +19,22 @@ import {
 class Question extends Component {
   state = { optionOne: '', optionTwo: '' };
 
+  handleAnswerChange = (e, { value }) => this.setState({ value });
+
+  handleAnswerSubmit = (e) => {
+    e.preventDefault();
+
+    const { value } = this.state;
+    const { match, questions, auth } = this.props;
+    const { id } = match.params;
+    const question = id && questions[id];
+
+    this.props.updateAnswerAsync(auth.user.id, question.id, value)
+  };
+
   handleChange = (e, { name, value }) => {
     console.log(name, value);
     this.setState({ [name]: value });
-  };
-
-  handleRadioChange = (e, { value }) => this.setState({ value });
-
-  handleRadioFormSubmit = (e) => {
-    e.preventDefault();
-    console.log('TODO: Dispatch Action to REDUX');
-    console.log(this.state.value);
   };
 
   handleSubmit = (e) => {
@@ -36,6 +43,11 @@ class Question extends Component {
     console.log('TODO: Dispatch Action to REDUX');
     console.log(optionOne, optionTwo);
   };
+
+  componentDidMount(){
+    console.log(this.props.questions)
+    console.log(this.props.users)
+  }
   render() {
     const { optionOne, optionTwo } = this.state;
     const { match, questions, users, auth } = this.props;
@@ -65,14 +77,14 @@ class Question extends Component {
                         <Item.Header as='a'>{author.name} asks:</Item.Header>
                         <Item.Description>
                           <Header as='h5'>Would you rather</Header>
-                          <Form onSubmit={this.handleRadioFormSubmit}>
+                          <Form onSubmit={this.handleAnswerSubmit}>
                             <Form.Field>
                               <Radio
                                 label={question.optionOne.text}
                                 name='radioGroup'
                                 value='optionOne'
                                 checked={this.state.value === 'optionOne'}
-                                onChange={this.handleRadioChange}
+                                onChange={this.handleAnswerChange}
                               />
                             </Form.Field>
                             <Form.Field>
@@ -81,7 +93,7 @@ class Question extends Component {
                                 name='radioGroup'
                                 value='optionTwo'
                                 checked={this.state.value === 'optionTwo'}
-                                onChange={this.handleRadioChange}
+                                onChange={this.handleAnswerChange}
                               />
                             </Form.Field>
 
@@ -141,4 +153,8 @@ const mapStateToProps = (state, ownProps) => {
     auth: state.auth,
   };
 };
-export default withRouter(connect(mapStateToProps)(Question));
+
+ const mapDispatchToProps =  {
+  updateAnswerAsync
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Question));

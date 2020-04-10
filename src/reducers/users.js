@@ -1,4 +1,4 @@
-import { INIT_USERS } from '../actions/types';
+import { INIT_USERS, UPDATE_ANSWER } from '../actions/types';
 
 const users = (state = [], action) => {
   switch (action.type) {
@@ -13,6 +13,19 @@ const users = (state = [], action) => {
         };
       });
       return updatedUsers;
+
+      case UPDATE_ANSWER:
+        return {
+          ...state,
+          [action.uid] : {
+            ...state[action.uid],
+            answers: {
+              ...state[action.uid].answers,
+              [action.uid]: action.answer
+            }
+          }
+        }
+
     default:
       return state;
   }
