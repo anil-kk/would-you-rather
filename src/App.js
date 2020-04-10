@@ -1,17 +1,14 @@
 import React from 'react';
-import * as API from './service/_DATA';
-
 import { Container } from 'semantic-ui-react';
+import { Route, Switch, NavLink, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Nav from './components/Nav';
 import Login from './components/Login';
 import Question from './components/Question';
 import LeaderBoard from './components/LeaderBoard';
 import Home from './components/Home';
-
-import { Route, Switch, NavLink, Link } from 'react-router-dom';
-
-import { connect } from 'react-redux';
+import RouteAuth from './components/RouteAuth';
 
 import { initUsersAsync, initQuestionsAsync } from './actions';
 
@@ -29,18 +26,22 @@ class App extends React.Component {
         {auth.isAuthenticated ? <Nav></Nav> : null}
 
         <Switch>
-          <Route exact path='/'>
-            <Home />
-          </Route>
-          <Route path='/question'>
-            <Question />
-          </Route>
-          <Route path='/leaderboard'>
-            <LeaderBoard />
-          </Route>
-          <Route path='/login'>
+        <Route path='/login'>
             <Login />
           </Route>
+
+          <RouteAuth>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route path='/question'>
+              <Question />
+            </Route>
+            <Route path='/leaderboard'>
+              <LeaderBoard />
+            </Route>
+          </RouteAuth>
+
         </Switch>
       </Container>
     );
@@ -49,12 +50,12 @@ class App extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 };
 
 const mapDispatchToProps = {
   initUsersAsync,
-  initQuestionsAsync
+  initQuestionsAsync,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);
