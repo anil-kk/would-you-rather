@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
+import {useHistory} from 'react-router';
 import { Item, Button, Icon } from 'semantic-ui-react';
 
 const QuestionItem = (props) => {
   const { question, author } = props;
+  let history = useHistory();
   return (
     <Fragment>
       <Item>
@@ -15,7 +17,7 @@ const QuestionItem = (props) => {
           <Item.Description>{question.optionOne.text}</Item.Description>
 
           <Item.Extra>
-            <Button primary floated='right'>
+            <Button primary floated='right' onClick={() => history.push(`/question/${question.id}`)}>
               View Poll
               <Icon name='right chevron' />
             </Button>

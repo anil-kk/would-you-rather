@@ -32,7 +32,7 @@ class QuestionList extends React.Component {
         menuItem: 'Un Answered Questions',
         render: () => (
           <Tab.Pane>
-            <Item.Group link>
+            <Item.Group>
               {unAnswered.map((questionId) => {
                 const question = questions[questionId];
                 const author = users[question.author];
