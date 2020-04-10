@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Menu, Icon } from 'semantic-ui-react';
+import { Menu, Icon, Image, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { signOut } from '../actions';
 
-import {withRouter} from 'react-router'
+import { withRouter } from 'react-router';
 
 class Nav extends Component {
   state = { activeItem: 'home' };
@@ -14,11 +14,12 @@ class Nav extends Component {
 
   logOut = () => {
     this.props.signOut();
-    this.props.history.push('/login')
+    this.props.history.push('/login');
   };
 
   render() {
     const { activeItem } = this.state;
+    const { auth } = this.props;
 
     return (
       <Menu secondary>
@@ -45,8 +46,14 @@ class Nav extends Component {
         />
         <Menu.Menu position='right'>
           <Menu.Item name='user'>
-            User
-            <Icon name='user' size='large' />
+            {auth && auth.user ? (
+              <Label as='a' color={'blue'}>
+                <Image avatar spaced='right' src={auth.user.avatarURL} />
+                {auth && auth.user && auth.user.name}
+              </Label>
+            ) : (
+              <Icon name='user' size='large' />
+            )}
           </Menu.Item>
           <Menu.Item name='logout' onClick={() => this.logOut()} />
         </Menu.Menu>
