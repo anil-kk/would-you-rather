@@ -18,8 +18,16 @@ import {withRouter} from 'react-router'
 class Login extends Component {
   state = { userId: null };
   login() {
+    const { location } = this.props;
+    const { state } = location;
     this.props.signIn(this.props.users[this.state.userId]);
-    this.props.history.push('/');
+
+    if (state && state.from) {
+      this.props.history.replace(state.from);
+      return;
+    }
+ 
+      this.props.history.push('/');
   }
 
   handleChange = (e, { value }) => this.setState({ userId: value });
